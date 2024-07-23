@@ -1,35 +1,39 @@
-abstract class NewsStates {}
+import 'package:flutter/material.dart';
 
-class NewsInitialState extends NewsStates {}
+abstract class AppStates {}
 
-class NewsBottomNavState extends NewsStates {}
+class AppInitialState extends AppStates {}
 
-class NewsGetBusinessLoadingState extends NewsStates {}
+class NewsBottomNavState extends AppStates {}
 
-class NewsGetBusinessSuccessState extends NewsStates {}
+class NewsGetBusinessLoadingState extends AppStates {}
 
-class NewsGetBusinessErrorState extends NewsStates {
-  late final String error;
+class NewsGetBusinessSuccessState extends AppStates {}
+
+class NewsGetBusinessErrorState extends AppStates {
+  final String error;
 
   NewsGetBusinessErrorState(this.error);
 }
 
-class NewsGetSportsLoadingState extends NewsStates {}
+class NewsGetSportsLoadingState extends AppStates {}
 
-class NewsGetSportsSuccessState extends NewsStates {}
+class NewsGetSportsSuccessState extends AppStates {}
 
-class NewsGetSportsErrorState extends NewsStates {
-  late final String error;
+class NewsGetSportsErrorState extends AppStates {
+  final String error;
 
   NewsGetSportsErrorState(this.error);
 }
 
-class NewsGetScienceLoadingState extends NewsStates {}
+class NewsGetScienceLoadingState extends AppStates {}
 
-class NewsGetScienceSuccessState extends NewsStates {}
+class NewsGetScienceSuccessState extends AppStates {}
 
-class NewsGetScienceErrorState extends NewsStates {
-  late final String error;
+class NewsGetScienceErrorState extends AppStates {
+  final String error;
 
   NewsGetScienceErrorState(this.error);
 }
+
+class ThemeChangedState extends AppStates {}

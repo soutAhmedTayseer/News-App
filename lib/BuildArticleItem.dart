@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 
-Widget buildArticleItem(articles,context)=> InkWell(
+Widget buildArticleItem(articles, context) => InkWell(
   onTap: () {
     // navigateTo(context, Webviewscreen(articles['url']));
   },
   child: Padding(
     padding: const EdgeInsets.all(20.0),
     child: Row(
-      children:
-      [
+      children: [
         Container(
           width: 120.0,
           height: 120.0,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0,),
+            borderRadius: BorderRadius.circular(10.0),
             image: DecorationImage(
               image: NetworkImage('${articles['urlToImage']}'),
               fit: BoxFit.cover,
@@ -29,8 +28,7 @@ Widget buildArticleItem(articles,context)=> InkWell(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children:
-              [
+              children: [
                 Expanded(
                   child: Text(
                     '${articles['title']}',
@@ -57,4 +55,28 @@ Widget buildArticleItem(articles,context)=> InkWell(
   ),
 );
 
-Widget myDivider() => const SizedBox(height: 5);
+Widget myDivider() => Padding(
+  padding: const EdgeInsetsDirectional.only(
+    start: 20.0,
+  ),
+  child: Container(
+    width: double.infinity,
+    height: 1.0,
+    color: Colors.grey[300],
+  ),
+);
+
+Widget articleBuilder(list, context, {isSearch = false})
+{
+  if (list.length > 0)
+  {
+    return ListView.separated(
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, index) => buildArticleItem(list[index], context),
+      separatorBuilder: (context, index) => myDivider(),
+      itemCount: 40,
+    );
+  } else {
+    return isSearch ? Container() : const Center(child: CircularProgressIndicator());
+  }
+}
