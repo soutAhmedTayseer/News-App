@@ -32,7 +32,7 @@ class AppCubit extends Cubit<AppStates> {
     emit(NewsGetBusinessLoadingState());
     DioHelper.getData(url: 'v2/everything', query: {
       'q': 'business',
-      'from': '2024-06-23',
+      'from': '2024-06-25',
       'sortBy': 'publishedAt',
       'apiKey': '05bfb63b949e4c818ed3c2a99d3b3afc',
     }).then((value) {
@@ -49,7 +49,7 @@ class AppCubit extends Cubit<AppStates> {
     if (sports.isEmpty) {
       DioHelper.getData(url: 'v2/everything', query: {
         'q': 'sports',
-        'from': '2024-06-23',
+        'from': '2024-06-25',
         'sortBy': 'publishedAt',
         'apiKey': '05bfb63b949e4c818ed3c2a99d3b3afc',
       }).then((value) {
@@ -69,7 +69,7 @@ class AppCubit extends Cubit<AppStates> {
     if (science.isEmpty) {
       DioHelper.getData(url: 'v2/everything', query: {
         'q': 'science',
-        'from': '2024-06-23',
+        'from': '2024-06-25',
         'sortBy': 'publishedAt',
         'apiKey': '05bfb63b949e4c818ed3c2a99d3b3afc',
       }).then((value) {
