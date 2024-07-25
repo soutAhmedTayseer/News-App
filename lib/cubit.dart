@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_projects/DioHelper.dart';
 import 'package:flutter_projects/BusinessScreen.dart';
 import 'package:flutter_projects/ScienceScreen.dart';
 import 'package:flutter_projects/SportsScreen.dart';
-import 'package:flutter_projects/DioHelper.dart';
-import 'states.dart';
+import 'package:flutter_projects/states.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -28,19 +29,34 @@ class AppCubit extends Cubit<AppStates> {
   ];
 
   List<dynamic> business = [];
+  List<dynamic> businessSearchResults = [];
+
   void getBusiness() {
     emit(NewsGetBusinessLoadingState());
     DioHelper.getData(url: 'v2/everything', query: {
       'q': 'business',
       'from': '2024-06-25',
       'sortBy': 'publishedAt',
-      'apiKey': '05bfb63b949e4c818ed3c2a99d3b3afc',
+      'apiKey': '88241b388d4c4ed6939e73c72d6b84d5',
     }).then((value) {
       business = value.data['articles'];
+      businessSearchResults = business; // Initialize with all articles
       emit(NewsGetBusinessSuccessState());
     }).catchError((error) {
       emit(NewsGetBusinessErrorState(error.toString()));
     });
+  }
+
+  void searchBusiness(String query) {
+    if (query.isEmpty) {
+      businessSearchResults = business;
+    } else {
+      businessSearchResults = business
+          .where((article) =>
+          article['title'].toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    }
+    emit(NewsGetBusinessSuccessState());
   }
 
   List<dynamic> sports = [];
@@ -51,7 +67,7 @@ class AppCubit extends Cubit<AppStates> {
         'q': 'sports',
         'from': '2024-06-25',
         'sortBy': 'publishedAt',
-        'apiKey': '05bfb63b949e4c818ed3c2a99d3b3afc',
+        'apiKey': '88241b388d4c4ed6939e73c72d6b84d5',
       }).then((value) {
         sports = value.data['articles'];
         emit(NewsGetSportsSuccessState());
@@ -71,7 +87,7 @@ class AppCubit extends Cubit<AppStates> {
         'q': 'science',
         'from': '2024-06-25',
         'sortBy': 'publishedAt',
-        'apiKey': '05bfb63b949e4c818ed3c2a99d3b3afc',
+        'apiKey': '88241b388d4c4ed6939e73c72d6b84d5',
       }).then((value) {
         science = value.data['articles'];
         emit(NewsGetScienceSuccessState());
@@ -97,8 +113,17 @@ class AppCubit extends Cubit<AppStates> {
     emit(NewsBottomNavState());
   }
 
-  void toggleTheme() {
+  void toggleTheme() async {
     themeMode = themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDark', themeMode == ThemeMode.dark);
+    emit(ThemeChangedState());
+  }
+
+  Future<void> loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final isDark = prefs.getBool('isDark') ?? false;
+    themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
     emit(ThemeChangedState());
   }
 }

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 abstract class AppStates {}
 
 class AppInitialState extends AppStates {}
@@ -37,3 +35,7 @@ class NewsGetScienceErrorState extends AppStates {
 }
 
 class ThemeChangedState extends AppStates {}
+
+class AppThemeChangedState extends AppStates {}
+
+class AppThemeLoadedState extends AppStates {}

@@ -66,17 +66,16 @@ Widget myDivider() => Padding(
   ),
 );
 
-Widget articleBuilder(list, context, {isSearch = false})
-{
-  if (list.length > 0)
-  {
+Widget articleBuilder(list, context, {isSearch = false}) {
+  if (list.isNotEmpty) {
     return ListView.separated(
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) => buildArticleItem(list[index], context),
       separatorBuilder: (context, index) => myDivider(),
-      itemCount: 40,
+      itemCount: list.length, // Change this line
     );
   } else {
     return isSearch ? Container() : const Center(child: CircularProgressIndicator());
   }
 }
+

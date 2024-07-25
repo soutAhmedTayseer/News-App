@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_projects/cubit.dart';
 import 'package:flutter_projects/states.dart';
 
+import 'BuildArticleItem.dart';
+
 class NewsLayout extends StatelessWidget {
   const NewsLayout({super.key});
 
@@ -18,18 +20,30 @@ class NewsLayout extends StatelessWidget {
             title: const Text('News App'),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Show a search field
+                  showSearch(
+                    context: context,
+                    delegate: ArticleSearchDelegate(cubit),
+                  );
+                },
                 icon: const Icon(Icons.search),
               ),
               IconButton(
                 onPressed: () {
                   cubit.toggleTheme();
                 },
-                icon: const Icon(Icons.dark_mode),
+                icon: Icon(
+                  cubit.themeMode == ThemeMode.light
+                      ? Icons.dark_mode
+                      : Icons.light_mode,
+                ),
               ),
             ],
           ),
-          body: cubit.screens[cubit.currentIndex],
+          body: cubit.currentIndex == 0
+              ? articleBuilder(cubit.businessSearchResults, context)
+              : cubit.screens[cubit.currentIndex],
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: cubit.currentIndex,
             onTap: (index) {
@@ -40,5 +54,45 @@ class NewsLayout extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class ArticleSearchDelegate extends SearchDelegate {
+  final AppCubit cubit;
+
+  ArticleSearchDelegate(this.cubit);
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+        icon: const Icon(Icons.clear),
+        onPressed: () {
+          query = '';
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    cubit.searchBusiness(query);
+    return articleBuilder(cubit.businessSearchResults, context, isSearch: true);
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    cubit.searchBusiness(query);
+    return articleBuilder(cubit.businessSearchResults, context, isSearch: true);
   }
 }

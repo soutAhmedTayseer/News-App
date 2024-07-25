@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AppCubit()
+        ..loadTheme()
         ..getBusiness()
         ..getSports()
         ..getScience(),
