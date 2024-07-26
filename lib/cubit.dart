@@ -19,7 +19,7 @@ class AppCubit extends Cubit<AppStates> {
     const BottomNavigationBarItem(
         icon: Icon(Icons.business_center), label: 'Business'),
     const BottomNavigationBarItem(icon: Icon(Icons.sports), label: 'Sports'),
-    const BottomNavigationBarItem(icon: Icon(Icons.science), label: 'Science'),
+    const BottomNavigationBarItem(icon: Icon(Icons.health_and_safety), label: 'Health'),
   ];
 
   List<Widget> screens = [
@@ -84,7 +84,7 @@ class AppCubit extends Cubit<AppStates> {
     emit(NewsGetScienceLoadingState());
     if (science.isEmpty) {
       DioHelper.getData(url: 'v2/everything', query: {
-        'q': 'science',
+        'q': 'health',
         'from': '2024-06-25',
         'sortBy': 'publishedAt',
         'apiKey': '88241b388d4c4ed6939e73c72d6b84d5',
