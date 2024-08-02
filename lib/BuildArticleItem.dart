@@ -40,7 +40,7 @@ Widget buildArticleItem(articles, context) => InkWell(
                       child: Text(
                         '${articles['title']}',
                         style: Theme.of(context).textTheme.bodyLarge,
-                        maxLines: 3,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),

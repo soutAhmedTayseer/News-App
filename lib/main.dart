@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_projects/DioHelper.dart';
-import 'package:flutter_projects/NewsLayout.dart';
+import 'package:flutter_projects/SplashScreen.dart';
 import 'package:flutter_projects/cubit.dart';
 import 'package:flutter_projects/states.dart';
 import 'themes.dart';
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
             themeMode: themeMode,
             home: const Directionality(
               textDirection: TextDirection.ltr,
-              child: NewsLayout(),
+              child: SplashScreen(),
             ),
           );
         },
