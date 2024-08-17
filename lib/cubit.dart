@@ -40,7 +40,7 @@ class AppCubit extends Cubit<AppStates> {
       'apiKey': '88241b388d4c4ed6939e73c72d6b84d5',
     }).then((value) {
       business = value.data['articles'];
-      businessSearchResults = business; // Initialize with all articles
+      businessSearchResults = business; // Initialize with all
       emit(NewsGetBusinessSuccessState());
     }).catchError((error) {
       emit(NewsGetBusinessErrorState(error.toString()));
