@@ -65,7 +65,7 @@ class AppCubit extends Cubit<AppStates> {
     if (sports.isEmpty) {
       DioHelper.getData(url: 'v2/everything', query: {
         'q': 'sports',
-        'from': '2024-07-21',
+        'from': '2024-07-23',
         'sortBy': 'publishedAt',
         'apiKey': '88241b388d4c4ed6939e73c72d6b84d5',
       }).then((value) {
